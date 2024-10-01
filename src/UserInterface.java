@@ -1,7 +1,9 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
    private Adventure adventure = new Adventure();
+
 
     public void userInterface(){
         boolean game = true;
@@ -32,25 +34,64 @@ public class UserInterface {
                 Room currentRoom = adventure.getCurrentRoom();
                 System.out.println("You are in room " + currentRoom.getName());
                 System.out.println(currentRoom.getDescription());
+
+                if (currentRoom.getItems().isEmpty()) {
+                    System.out.println("There are no items in this room.");
+                } else {
+                    System.out.println(currentRoom.getItems());
+                }
+
+
             }
             case "help" -> System.out.println(
-                    "Type [go north], [north], [n] to move Peter North\n" +
-                            "Type [go east], [east], [e] to move Peter east\n" +
-                            "Type [go south], [south], [s] to move Peter south\n" +
-                            "Type [go west],[west], [w] to move Peter West)\n" +
-                            "Type look for description of your location\n" +
-                            "Type exit - exiting game");
+                    "Type [go north], [north], [n] --> move Peter North\n" +
+                            "Type [go east], [east], [e] --> move Peter east\n" +
+                            "Type [go south], [south], [s] --> move Peter south\n" +
+                            "Type [go west],[west], [w] --> move Peter West)\n" +
+                            "Type [look] --> description of your location\n" +
+                            "Type [take <item name> ], [t] --> add item to inventory\n" +
+                            "Type [inventory], [i] --> look at inventory\n" +
+                            "Type [drop <item name> ], [d] --> drop item\n" +
+                            "Type exit --> exiting game");
+
+            case "take", "t" -> {
+
+                String itemName = brugervalg.substring(5).trim();
+                Item item = adventure.getCurrentRoom().itemFinder(itemName);
+
+                if(item != null){
+                    adventure.getPeter().takeItem(item);
+                    System.out.println("You have taken " + itemName);
+                }
+                else {
+                    System.out.println(itemName + "cannot be found" );
+                }
+            }
+
+            case "inventory", "i" -> adventure.getPeter().showInventory();
+
+            case "drop", "d" -> {
+
+                String itemName = brugervalg.substring(5).trim();
+                Item item = adventure.getCurrentRoom().itemFinder(itemName);
+
+                if(item != null){
+                    adventure.getPeter().dropItem(item);
+                    System.out.println("You have taken " + itemName);
+                }
+                else {
+                    System.out.println(itemName + "cannot be found" );
+                }
+
+
+            }
 
             case "exit" -> game = false;
-
 
             default -> System.out.println("Invalid input. Type [help] for available commands");
         }
 
         }
-
-
-
         System.out.println("You are exiting the game - goodbye:)");
 
 

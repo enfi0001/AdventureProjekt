@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Map {
     public Room createRooms() {
         Room room1 = new Room("room1", "description kommer");
@@ -21,10 +23,12 @@ public class Map {
         room8.setRoomExit(room5, room9, null, room7);
         room9.setRoomExit(room6, null, null, room8);
 
+        room1.addItems("Sword", "description kommer");
+        //room1.addItems("Item 2 i room1", "description kommer"); test dette senere og test med et rum med 0 items i sig
+        room2.addItems("Item 2", "description kommer");
+        room3.addItems("Item 3", "description kommer");
+
         return room1; //start rummet spileren er i
-
-
-
 
     }
 }

@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+
 public class Peter {
     private Room currentRoom;
+    private ArrayList<Item> inventory = new ArrayList<>();
 
     public Peter(Room currentRoom){
         this.currentRoom = currentRoom;
@@ -9,9 +12,9 @@ public class Peter {
         return currentRoom;
     }
 
-    public void setCurrentRoom(Room currentRoom) {
-        this.currentRoom = currentRoom;
-    }
+//    public void setCurrentRoom(Room currentRoom) {
+//        this.currentRoom = currentRoom;
+//    }
 
 
     //metode til at flytte til et nyt rum:
@@ -35,4 +38,40 @@ public class Peter {
 
 
     }
+
+    public void takeItem(Item item){
+        inventory.add(item);
+        currentRoom.removeItems(item);
+    }
+
+
+    public void dropItem(Item item){
+        inventory.remove(item);
+        currentRoom.addItems(item);
+    }
+
+    public void showInventory(){
+        if (inventory.isEmpty()){
+            System.out.println("Your inventory is empty");
+        }
+        else {
+            System.out.println("Your inventory contains: ");
+            for (Item item : inventory) {
+                System.out.println(item.getName());
+            }
+        }
+
+    }
+
+    public Item itemFinderInventory(String name){
+        for(Item item : inventory) {
+
+            if (item.getName().equalsIgnoreCase(name)) {
+                return item;
+            }
+        }
+        return null;
+
+    }
+
 }
