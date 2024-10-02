@@ -24,7 +24,6 @@ public class Map {
         room9.setRoomExit(room6, null, null, room8);
 
         room1.addItems("Sword", "description kommer");
-        //room1.addItems("Item 2 i room1", "description kommer"); test dette senere og test med et rum med 0 items i sig
         room2.addItems("Item 2", "description kommer");
         room3.addItems("Item 3", "description kommer");
 
