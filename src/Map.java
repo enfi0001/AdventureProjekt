@@ -23,9 +23,28 @@ public class Map {
         room8.setRoomExit(room5, room9, null, room7);
         room9.setRoomExit(room6, null, null, room8);
 
-        room1.addItems("Sword", "description kommer");
-        room2.addItems("Item 2", "description kommer");
-        room3.addItems("Item 3", "description kommer");
+
+ //--------------------------------------------------------------------------------------------------------------------//
+        Item item1 = new Item("Sword", "description kommer");
+        Item item2 = new Item("Item 2", "description kommer");
+        Item item3 = new Item("Item 3", "description kommer");
+
+
+        room1.addItems(item1);
+        room2.addItems(item2);
+        room3.addItems(item3);
+
+
+//----------------------------------------------------------------------------------------------------------------------//
+
+        Food food1 = new Food("Redbull", "Increase your health (50Hp)");
+
+
+        room1.addItems(food1);
+
+
+
+
 
         return room1; //start rummet spileren er i
 

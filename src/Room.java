@@ -8,6 +8,7 @@ public class Room {
     private Room south;
     private Room west;
     private ArrayList<Item> items = new ArrayList();
+    private ArrayList<Food> foods = new ArrayList();
 
 
     public Room(String name, String description) {
@@ -46,12 +47,12 @@ public class Room {
         this.south = south;
         this.west = west;
     }
+//
+//    public void addItems(String name, String description) {
+//        items.add(new Item(name, description));
+//    }
 
-    public void addItems(String name, String description) {
-        items.add(new Item(name, description));
-    }
-
-    public void addItems(Item item) {
+   public void addItems(Item item) {
         items.add(item);
     }
 
@@ -73,9 +74,6 @@ public class Room {
         }
         return null;
     }
-
-
-
 }
 
 

@@ -74,4 +74,27 @@ public class Peter {
 
     }
 
+    public void health(){
+        int hp = 50;
+
+        if (hp == 100){
+            System.out.println("Your health is " + hp +  "% -> You can easily fight in this stage");
+        }
+
+        if (hp > 50){
+            System.out.println("Your health is " + hp +  "% -> Your health is quite good ");
+        }
+
+        if (hp <= 50){
+            System.out.println("Your health is " + hp +  "% -> You should not fight in this stage");
+        }
+
+
+
+
+
+    }
+
+
+
 }

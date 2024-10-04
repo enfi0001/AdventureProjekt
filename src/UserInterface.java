@@ -48,12 +48,9 @@ public class UserInterface {
             }
 
 
+
+
             else {
-
-
-
-
-
                 switch (brugervalg) {
                     case "go north", "north", "n" -> adventure.movePeter(brugervalg);
                     case "go east", "east", "e" -> adventure.movePeter(brugervalg);
@@ -72,6 +69,21 @@ public class UserInterface {
                         }
                     }
 
+                    case "health", "hp" -> {
+                        adventure.getPeter().health();
+
+                        if (adventure.getPeter().health();  100) {
+                            System.out.println("Your health is " + hp + "% -> You can easily fight in this stage");
+                        }
+
+                        if (hp > 50) {
+                            System.out.println("Your health is " + hp + "% -> Your health is quite good ");
+                        }
+
+                        if (hp <= 50) {
+                            System.out.println("Your health is " + hp + "% -> You should not fight in this stage");
+                        }
+                    }
                     case "inventory", "i" -> adventure.getPeter().showInventory();
 
                     case "help" -> System.out.println(
@@ -83,6 +95,7 @@ public class UserInterface {
                                     "Type [take <item name> ], [t] --> add item to inventory\n" +
                                     "Type [inventory], [i] --> look at inventory\n" +
                                     "Type [drop <item name> ], [d] --> drop item\n" +
+                                    "Type [health], [hp] --> Health status\n" +
                                     "Type [exit] --> exiting game");
 
                     case "exit" -> game = false;

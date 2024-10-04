@@ -17,7 +17,7 @@ public class Item {
 
     @Override
     public String toString(){
-        return "You have found an item: " + name + " --> " + description;
+        return "You have found an item: " + name + " --> " + description + "\n";
     }
 
 
