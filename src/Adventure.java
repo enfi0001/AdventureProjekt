@@ -8,15 +8,16 @@ public class Adventure {
         Map map = new Map();
         Room startRoom = map.createRooms();
         peter = new Peter(startRoom);
-    }
 
+
+    }
     public Peter getPeter() {
         return peter;
     }
 
 
-    public void movePeter(String move){
-        peter.moveRoom(move);
+    public boolean movePeter(String move){
+        return peter.moveRoom(move);
 
     }
 

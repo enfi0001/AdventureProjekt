@@ -10,7 +10,8 @@ public class UserInterface {
         Scanner input = new Scanner(System.in);
 
 
-        System.out.println("Welcome to escape Peter. Peter is gone astray in the dark forrest " +
+        System.out.println("Welcome to 'ESCAPE PETER'.\n" +
+                "Peter is gone astray in the dark forrest.\n " +
                 "Your mission is to escape Peter from the forrest. You can move Peter north, east, south, west");
 
         System.out.println("Type [help] for (commands, exit game)");
@@ -22,40 +23,90 @@ public class UserInterface {
 
 
 
-            // Tjek først for "take" eller "drop" kommandoer, som kan indeholde et item-navn
             if (brugervalg.startsWith("take ")) {
-                // Få item-navnet ved at fjerne 'take ' fra starten af brugervalg
-                String itemName = brugervalg.substring(5).trim(); // Fjerner 'take ' og får item-navnet
+                String itemName = brugervalg.substring(5).trim();
                 Item item = adventure.getCurrentRoom().itemFinder(itemName);
 
                 if (item != null) {
                     adventure.getPeter().takeItem(item);
-                    System.out.println("You have taken " + item.getName());
+                    System.out.println("You have added " + item.getName() + " to your inventory");
                 } else {
                     System.out.println("There is nothing like '" + itemName + "' to take around here.");
                 }
             } else if (brugervalg.startsWith("drop ")) {
-                // Få item-navnet ved at fjerne 'drop ' fra starten af brugervalg
-                String itemName = brugervalg.substring(5).trim(); // Fjerner 'drop ' og får item-navnet
+                String itemName = brugervalg.substring(5).trim();
                 Item item = adventure.getPeter().itemFinderInventory(itemName);
 
                 if (item != null) {
                     adventure.getPeter().dropItem(item);
-                    System.out.println("You have dropped " + item.getName());
+                    System.out.println("You have dropped " + item.getName() + " from your inventory");
                 } else {
                     System.out.println("You don't have anything like '" + itemName + "' in your inventory.");
                 }
-            }
+            } else if (brugervalg.startsWith("equip ")) {
+                String weaponName = brugervalg.substring(6).trim();
+                Item item = adventure.getPeter().itemFinderInventory(weaponName);
 
+                if (item != null && item instanceof Weapon) {
+                    adventure.getPeter().equipWeapon((Weapon) item);
+                    System.out.println("You have equipped " + item.getName());
+                } else if (item != null) {
+                    System.out.println(item.getName() + " is not a weapon.");
+                } else {
+                    System.out.println("You don't have such a weapon in your inventory.");
+                }
+            } else if (brugervalg.equals("attack")) {
+                Weapon equippedWeapon = adventure.getPeter().getEquippedWeapon();
 
+                if (equippedWeapon == null) {
+                    System.out.println("You have no weapon equipped.");
+                } else if (!equippedWeapon.canUse()) {
+                    System.out.println("Your " + equippedWeapon.getName() + " is out of ammo or cannot be used.");
+                } else {
+                    if (equippedWeapon instanceof RangedWeapon) {
+                        ((RangedWeapon) equippedWeapon).useWeapon();
+                        System.out.println("You are attacking with your " + equippedWeapon.getName() + "-->" + ((RangedWeapon) equippedWeapon).toString());
+                    } else {
+                        System.out.println("You are attacking with your " + equippedWeapon.getName());
+                    }
+                }
+            } else if (brugervalg.startsWith("eat ")) {
+                String foodName = brugervalg.substring(4).trim();
+                Item food = adventure.getCurrentRoom().itemFinder(foodName);
+                if (food == null) {
+                    food = adventure.getPeter().itemFinderInventory(foodName);
+                }
 
+                if (food != null && food instanceof Food) {
+                    Food edible = (Food) food;
+                    adventure.getPeter().increaseHealth(edible.getFoodHp());
+                    System.out.println("You ate " + foodName + " and increased your health by " + edible.getFoodHp() + " points.");
 
-            else {
+                    // Remove food from inventory or room
+                    if (adventure.getPeter().getInventory().contains(edible)) {
+                        adventure.getPeter().dropItem(edible);
+                    } else {
+                        adventure.getCurrentRoom().removeItems(edible);
+                    }
+                } else if (food != null) {
+                    System.out.println("You cannot eat " + foodName + ".");
+                } else {
+                    System.out.println("There is no such food around here.");
+                }
+            } else {
+
                 switch (brugervalg) {
-                    case "go north", "north", "n" -> adventure.movePeter(brugervalg);
-                    case "go east", "east", "e" -> adventure.movePeter(brugervalg);
-                    case "go south", "south", "s" -> adventure.movePeter(brugervalg);
-                    case "go west", "west", "w" -> adventure.movePeter(brugervalg);
+                    case "go north", "north", "n", "go east", "east", "e", "go south", "south", "s", "go west", "west",
+                         "w" -> {
+
+                        if (adventure.movePeter(brugervalg)) {
+                            System.out.println("You have moved Peter to: " + adventure.getCurrentRoom().getName());
+                            System.out.println(adventure.getCurrentRoom().getDescription());
+                        } else {
+                            System.out.println("You cannot go that way, you are at the edge of a cliff.");
+                        }
+                    }
+
 
                     case "look" -> {
                         Room currentRoom = adventure.getCurrentRoom();
@@ -70,21 +121,33 @@ public class UserInterface {
                     }
 
                     case "health", "hp" -> {
-                        adventure.getPeter().health();
+                        int hP = adventure.getPeter().getHealthPoint();
 
-                        if (adventure.getPeter().health();  100) {
-                            System.out.println("Your health is " + hp + "% -> You can easily fight in this stage");
+                        if (hP == 100) {
+                            System.out.println("Your health is " + hP + "% -> You can easily fight in this stage");
+                        } else if (hP > 50) {
+                            System.out.println("Your health is " + hP + "% -> Your are doing well.");
+                        } else if (hP == 0) {
+                            System.out.println("You health is " +  hP + "% -> You have died:( Try again");
+                            game = false;
+                        }else if (hP <= 50)
+                            System.out.println("Your health is " + hP + "% -> You should not fight in this stage");
+                    }
+                    case "inventory", "i" -> {
+                        ArrayList<Item> inventory = adventure.getPeter().getInventory();
+                       if (adventure.getPeter().showInventory().isEmpty()){
+                           System.out.println("Your inventory is empty");
+                       }else
+                           System.out.println("Your inventory contains: ");
+                        for (Item item : inventory) {
+                            System.out.println("- " + item.getName() + ": " + item.getDescription());
                         }
-
-                        if (hp > 50) {
-                            System.out.println("Your health is " + hp + "% -> Your health is quite good ");
-                        }
-
-                        if (hp <= 50) {
-                            System.out.println("Your health is " + hp + "% -> You should not fight in this stage");
+                        Weapon equippedWeapon = adventure.getPeter().getEquippedWeapon();
+                        if (equippedWeapon != null) {
+                            System.out.println("Equipped Weapon: " + equippedWeapon.getName());
                         }
                     }
-                    case "inventory", "i" -> adventure.getPeter().showInventory();
+
 
                     case "help" -> System.out.println(
                             "Type [go north], [north], [n] --> move Peter North\n" +

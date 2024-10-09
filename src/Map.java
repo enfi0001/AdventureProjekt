@@ -25,9 +25,9 @@ public class Map {
 
 
  //--------------------------------------------------------------------------------------------------------------------//
-        Item item1 = new Item("Sword", "description kommer");
-        Item item2 = new Item("Item 2", "description kommer");
-        Item item3 = new Item("Item 3", "description kommer");
+        Item item1 = new Item("Book", "description kommer");
+        Item item2 = new Item("Computer", "description kommer");
+        Item item3 = new Item("Old picture", "description kommer");
 
 
         room1.addItems(item1);
@@ -37,12 +37,22 @@ public class Map {
 
 //----------------------------------------------------------------------------------------------------------------------//
 
-        Food food1 = new Food("Redbull", "Increase your health (50Hp)");
+        Food food1 = new Food("Honey", "Increase your health (50Hp)", 50);
+        Food food2 = new Food("Rotten meat","This could affect your health",-20);
 
 
         room1.addItems(food1);
+        room4.addItems(food2);
 
 
+
+//-----------------------------------------------------------------------------------------------------------------------//
+
+        Weapon weapon1 = new MeleeWeapon("branch", "a thick branch, use it to damage your enemy");
+        Weapon weapon2 = new RangedWeapon("bow", " Old bow made of wood with 10 arrows, use it to damage your enemy", 10);
+
+        room1.addItems(weapon1);
+        room1.addItems(weapon2);
 
 
 
