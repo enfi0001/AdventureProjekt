@@ -9,7 +9,6 @@ public class Adventure {
         Room startRoom = map.createRooms();
         peter = new Peter(startRoom);
 
-
     }
     public Peter getPeter() {
         return peter;

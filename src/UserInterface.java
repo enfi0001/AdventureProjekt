@@ -68,17 +68,7 @@ public class UserInterface {
                     System.out.println(attackResult);  // Udskriv resultatet af angrebet
 
                     // Hvis fjenden stadig er i live, angriber den Peter
-                    if (enemy.isAlive()) {
-                        int damage = enemy.enemyAttack();
-                        adventure.getPeter().decreaseHealth(damage);
-                        System.out.println(enemy.getName() + " attacked you for " + damage + " damage.");
-                        System.out.println("You now have " + adventure.getPeter().getHealthPoint() + " HP left.");
 
-                        if (adventure.getPeter().getHealthPoint() <= 0) {
-                            System.out.println("You have died. Game Over.");
-                            game = false;
-                        }
-                    }
                 }
 
             } else if (brugervalg.startsWith("eat ")) {

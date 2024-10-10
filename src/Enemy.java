@@ -25,7 +25,7 @@ public class Enemy {
 
     public void takeEnemyDamage(int damage){
         enemyHp -= damage;
-        if (enemyHp > 0){
+        if (enemyHp < 0){
             enemyHp = 0;
         }
     }

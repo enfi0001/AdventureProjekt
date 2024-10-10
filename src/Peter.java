@@ -92,7 +92,7 @@ public class Peter {
     }
 
     public void decreaseHealth(int decrease){
-        healthPoint =- decrease;
+        healthPoint -= decrease;
         if (healthPoint < 0){
             healthPoint = 0;
         }
@@ -124,22 +124,35 @@ public class Peter {
             return "Your " + equippedWeapon.getName() + " is out of ammo or cannot be used.";
         }
 
+
+
         // Peter angriber fjenden
         equippedWeapon.useWeapon();
-        int damage = equippedWeapon.getDamage();
+        int damage = equippedWeapon.getDamage(); // Skade fra våben
         enemy.takeEnemyDamage(damage);
 
         String result = "You attacked " + enemy.getName() + " with your " + equippedWeapon.getName() + " for " + damage + " damage.\n";
 
-        if (!enemy.isAlive()) {
+        if (equippedWeapon instanceof RangedWeapon) {
+            result += ((RangedWeapon) equippedWeapon).toString() + "\n";  // Udskriv ammunition
+        }
+
+        // Hvis fjenden ikke dør, angriber den Peter
+        if (enemy.isAlive()) {
+            result += enemy.getName() + " has " + enemy.getEnemyHp() + " HP left.\n";
+
+            int enemyDamage = enemy.enemyAttack();
+            decreaseHealth(enemyDamage);  // Fjenden angriber Peter
+
+            result += enemy.getName() + " attacked you for " + enemyDamage + " damage.\n";
+            result += "You now have " + healthPoint + " HP left.\n";
+        } else {
             result += "You killed " + enemy.getName() + "!\n";
             Weapon droppedWeapon = enemy.dropWeapon();
             if (droppedWeapon != null) {
                 currentRoom.addItems(droppedWeapon);
                 result += enemy.getName() + " dropped " + droppedWeapon.getName() + ".";
             }
-        } else {
-            result += enemy.getName() + " has " + enemy.getEnemyHp() + " HP left.";
         }
 
         return result;
