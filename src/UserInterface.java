@@ -55,19 +55,30 @@ public class UserInterface {
                 } else {
                     System.out.println("You don't have such a weapon in your inventory.");
                 }
-            } else if (brugervalg.equals("attack")) {
+            } else if (brugervalg.equals("attack ")) {
+               String enemyName = brugervalg.substring(7).trim();
                 Weapon equippedWeapon = adventure.getPeter().getEquippedWeapon();
+                Room currentRoom = adventure.getCurrentRoom();
+                Enemy enemy = currentRoom.getEnemy();  // Hent fjenden i rummet
 
-                if (equippedWeapon == null) {
-                    System.out.println("You have no weapon equipped.");
-                } else if (!equippedWeapon.canUse()) {
-                    System.out.println("Your " + equippedWeapon.getName() + " is out of ammo or cannot be used.");
+                if (enemy == null) {
+                    System.out.println("There is no enemy here to attack.");
                 } else {
-                    if (equippedWeapon instanceof RangedWeapon) {
-                        ((RangedWeapon) equippedWeapon).useWeapon();
-                        System.out.println("You are attacking with your " + equippedWeapon.getName() + "-->" + ((RangedWeapon) equippedWeapon).toString());
-                    } else {
-                        System.out.println("You are attacking with your " + equippedWeapon.getName());
+                    // Peter angriber fjenden
+                    String attackResult = adventure.getPeter().attackEnemy(enemy);
+                    System.out.println(attackResult);  // Udskriv resultatet af angrebet
+
+                    // Hvis fjenden stadig er i live, angriber den Peter
+                    if (enemy.isAlive()) {
+                        int damage = enemy.enemyAttack();
+                        adventure.getPeter().decreaseHealth(damage);
+                        System.out.println(enemy.getName() + " attacked you for " + damage + " damage.");
+                        System.out.println("You now have " + adventure.getPeter().getHealthPoint() + " HP left.");
+
+                        if (adventure.getPeter().getHealthPoint() <= 0) {
+                            System.out.println("You have died. Game Over.");
+                            game = false;
+                        }
                     }
                 }
             } else if (brugervalg.startsWith("eat ")) {
@@ -129,7 +140,6 @@ public class UserInterface {
                             System.out.println("Your health is " + hP + "% -> Your are doing well.");
                         } else if (hP == 0) {
                             System.out.println("You health is " +  hP + "% -> You have died:( Try again");
-                            game = false;
                         }else if (hP <= 50)
                             System.out.println("Your health is " + hP + "% -> You should not fight in this stage");
                     }

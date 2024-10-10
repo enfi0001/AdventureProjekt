@@ -15,4 +15,9 @@ public class MeleeWeapon extends Weapon{
     public void useWeapon() {
 
     }
+
+    @Override
+    public int getDamage() {
+    return 10;
+    }
 }

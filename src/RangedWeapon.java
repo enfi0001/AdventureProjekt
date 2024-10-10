@@ -21,6 +21,10 @@ public class RangedWeapon extends Weapon {
         }
     }
 
+    @Override
+    public int getDamage() {
+        return 15;
+    }
 
     @Override
     public String toString() {

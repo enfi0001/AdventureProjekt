@@ -8,5 +8,5 @@ public abstract class Weapon extends Item {
 
     public abstract void useWeapon();
 
-
+    public abstract int getDamage();
 }

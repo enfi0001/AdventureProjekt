@@ -55,6 +55,14 @@ public class Map {
         room1.addItems(weapon2);
 
 
+//-----------------------------------------------------------------------------------------------------------------------//
+
+        Enemy enemy1 = new Enemy("Witch","An evil witch who protects her domain",100, weapon1);
+
+
+
+
+
 
         return room1; //start rummet spileren er i
 
