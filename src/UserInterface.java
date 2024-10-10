@@ -55,14 +55,13 @@ public class UserInterface {
                 } else {
                     System.out.println("You don't have such a weapon in your inventory.");
                 }
-            } else if (brugervalg.equals("attack ")) {
-               String enemyName = brugervalg.substring(7).trim();
-                Weapon equippedWeapon = adventure.getPeter().getEquippedWeapon();
+            } else if (brugervalg.startsWith("attack ")) {
+                String enemyName = brugervalg.substring(7).trim();
                 Room currentRoom = adventure.getCurrentRoom();
-                Enemy enemy = currentRoom.getEnemy();  // Hent fjenden i rummet
+                Enemy enemy = currentRoom.enemyFinder(enemyName);  // Hent fjenden i rummet
 
                 if (enemy == null) {
-                    System.out.println("There is no enemy here to attack.");
+                    System.out.println("There is no enemy named '" + enemyName + "' here to attack.");
                 } else {
                     // Peter angriber fjenden
                     String attackResult = adventure.getPeter().attackEnemy(enemy);
@@ -81,6 +80,7 @@ public class UserInterface {
                         }
                     }
                 }
+
             } else if (brugervalg.startsWith("eat ")) {
                 String foodName = brugervalg.substring(4).trim();
                 Item food = adventure.getCurrentRoom().itemFinder(foodName);
@@ -124,8 +124,12 @@ public class UserInterface {
                         System.out.println("You are in room " + currentRoom.getName());
                         System.out.println(currentRoom.getDescription());
 
-                        if (currentRoom.getItems().isEmpty()) {
+                        if (!currentRoom.getEnemies().isEmpty())
+                        System.out.println("Be careful, there is an " + currentRoom.getEnemies());
+
+                        else if (currentRoom.getItems().isEmpty() && currentRoom.getEnemies().isEmpty()) {
                             System.out.println("There are no items in this room.");
+                            System.out.println("There are no enemies in this room.");
                         } else {
                             System.out.println(currentRoom.getItems());
                         }
@@ -166,8 +170,11 @@ public class UserInterface {
                                     "Type [go west], [west], [w] --> move Peter West\n" +
                                     "Type [look] --> description of your location\n" +
                                     "Type [take <item name> ], [t] --> add item to inventory\n" +
-                                    "Type [inventory], [i] --> look at inventory\n" +
                                     "Type [drop <item name> ], [d] --> drop item\n" +
+                                    "Type [eat <item name> ] --> eat item\n" +
+                                    "Type [equip <weapon name> ] --> equip weapon\n" +
+                                    "Type [attack <enemy name> ] --> Attack enemy\n" +
+                                    "Type [inventory], [i] --> look at inventory\n" +
                                     "Type [health], [hp] --> Health status\n" +
                                     "Type [exit] --> exiting game");
 

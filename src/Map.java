@@ -57,7 +57,9 @@ public class Map {
 
 //-----------------------------------------------------------------------------------------------------------------------//
 
-        Enemy enemy1 = new Enemy("Witch","An evil witch who protects her domain",100, weapon1);
+        Enemy enemy1 = new Enemy("Witch","who protects her domain",100, new RangedWeapon("Magic", "1", 10));
+
+        room4.addEnemy(enemy1);
 
 
 

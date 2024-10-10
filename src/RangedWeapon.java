@@ -23,7 +23,7 @@ public class RangedWeapon extends Weapon {
 
     @Override
     public int getDamage() {
-        return 15;
+        return 100;
     }
 
     @Override

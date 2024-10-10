@@ -14,13 +14,13 @@ public class Enemy {
 
 
     public String getName(){
-        return getName();
+        return name;
     }public String getDescription(){
-        return getDescription();
-    }public String getEnemyHp(){
-        return getEnemyHp();
-    }public String getEnemyWeapon(){
-        return getEnemyWeapon();
+        return description;
+    }public int getEnemyHp(){
+        return enemyHp;
+    }public Weapon getEnemyWeapon(){
+        return enemyWeapon;
     }
 
     public void takeEnemyDamage(int damage){
@@ -48,11 +48,8 @@ public class Enemy {
         return enemyWeapon;
     }
 
-
-
-
-
-
-
-
+    @Override
+    public String toString() {
+        return getName() +  " --> " + getDescription();
+    }
 }

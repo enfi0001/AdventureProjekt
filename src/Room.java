@@ -8,7 +8,7 @@ public class Room {
     private Room south;
     private Room west;
     private ArrayList<Item> items = new ArrayList();
-    private ArrayList<Enemy> enemy = new ArrayList();
+    private ArrayList<Enemy> enemies = new ArrayList();
 
 
 
@@ -74,10 +74,28 @@ public class Room {
         return null;
     }
 
-
     public void addEnemy(Enemy enemy){
-        enemy.add(enemy);
+        enemies.add(enemy);
     }
+
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void removeEnemy(Enemy enemy) {
+        enemies.remove(enemy);
+    }
+
+    public Enemy enemyFinder(String name) {
+        for (Enemy enemy : enemies) {
+            if (enemy.getName().equalsIgnoreCase(name)) {
+                return enemy;
+            }
+        }
+        return null;
+    }
+
 
 
 
